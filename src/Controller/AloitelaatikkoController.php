@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 use App\Entity\Aloitelaatikko;
+use App\Controller\AloiteController;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,18 +12,36 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AloitelaatikkoController extends AbstractController{
+
+      /**
+    * @Route("aloitelaatikko", name="aloitteet")
+    */
+    public function index() {
+       
+        $repository = $this->getDoctrine()->getRepository(Aloitelaatikko::class);
+        $aloitteet = $repository->findAll();
+       /* $aloite = new Aloitelaatikko();
+        $aloite->setAihe('testi');
+        $aloite->setKuvaus('asfadafs000');
+        array_push($aloitteet, $aloite);*/
+        return $this->render('index.html.twig', ['aloitteet' => $aloitteet]);
+    }
+
    /**
-    * @Route("aloitelaatikko", name="aloitelaatikko")
+    * @Route("aloitelaatikko/uusi", name="uusi")
     */
    public function aloitelaatikko(Request $request){
-       $aloitelaatikko = new Aloitelaatikko();
-       $aloitelaatikko->setEmail("");
+
+       $aloitelaatikko = new Aloitelaatikko();    
+       $aloitelaatikko->setKirjauspvm(date("d / m / Y"));
        $form = $this->createFormBuilder($aloitelaatikko)
-           ->setAction($this->generateUrl('aloitelaatikko'))
-           ->add('Etunimi',null,['required' => false])
-           ->add('Sukunimi', TextType::class)
-           ->add('Email', TextType::class)
-           ->add('Kirjauspvm',DateType::class, ['label' => 'Kirjauspäivämäärä'])
+           ->setAction($this->generateUrl('uusi'))
+           ->add('aihe', TextType::class, ['label' => 'Aloitteen aihe!'])
+           ->add('kuvaus', TextType::class, ['label' => 'Kirjoita aloitteesi!'])
+           ->add('etunimi',null,['required' => false])
+           ->add('sukunimi', TextType::class)
+           ->add('email', TextType::class)
+           ->add('kirjauspvm', TextType::class, ['label' => 'Kirjauspäivämäärä'])
            ->add('Save', SubmitType::class, ['label' => 'Tallenna', 'attr' =>array('class' => 'btn btn-info mt-3')])
            ->getForm();
 
@@ -31,14 +50,18 @@ class AloitelaatikkoController extends AbstractController{
            //Painettiinko lähetä nappia
            if($form->isSubmitted()){
                //if true , käsitellään lomaketiedot
-              // var_dump($henkilo);
+              
               $aloitelaatikko = $form->getData();
-                // return new Response($henkilo->getEtunimi());
+ 
+              $entityManager = $this->getDoctrine()->getManager();
 
-                // return new JsonResponse((Array)$henkilo);
-              // return $this->redirectToRoute('valmis');
-              return $this->render('lomakeLahetetty.hmtl.twig', [
-                  'pvm' => $aloitelaatikko->getKirjauspvm()   ]
+              $entityManager->persist($aloitelaatikko);
+      
+              $entityManager->flush();
+      
+              return $this->render('lomakeLahetetty.html.twig', [
+                  'pvm' => $aloitelaatikko->getKirjauspvm(),
+                  'etunimi' => $aloitelaatikko->getEtunimi()   ]
               );
            }
            //Luo näkymän joka näyttää lomakkeen

@@ -1,16 +1,48 @@
 <?php
 namespace App\Entity;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\AloitelaatikkoRepository")
+ */
 class Aloitelaatikko {
-    private $aihe;
-    private $kuvaus;
-    private $kirjauspvm;
+    /**
+ * @ORM\Id
+ * @ORM\Column(type="integer")
+ * @ORM\GeneratedValue(strategy="AUTO")
+ */
+private $id;
+    /**
+     * @ORM\Column
+     */
     private $etunimi;
+        /**
+     * @ORM\Column
+     */
     private $sukunimi;
+        /**
+     * @ORM\Column
+     */
     private $email;
-
-
+        /**
+     * @ORM\Column
+     */
+    private $aihe;
+        /**
+     * @ORM\Column
+     */
+    private $kuvaus;
+       /**
+     * @ORM\Column
+     */
+     private $kirjauspvm;
     
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getEmail()
     {
         return $this->email;

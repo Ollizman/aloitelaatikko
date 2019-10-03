@@ -3,7 +3,21 @@
 {% block title %} Aloitelomake {% endblock %}
 
 {% block body %}
-    {{ form_start(form1, {'action': path('aloitelaatikko'), 'method': 'POST', 'attr':{'class': 'form-signin'}} )}}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="http://localhost:8000/aloitelaatikko">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="http://localhost:8000/aloitelaatikko/uusi">Uusi aloite <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="#">Pricing</a>
+    </div>
+  </div>
+</nav>
+
+    {{ form_start(form1, {'action': path('uusi'), 'method': 'POST', 'attr':{'class': 'form-signin'}} )}}
         {{ form_widget(form1) }}
     {{ form_end(form1) }}
 {% endblock %}
