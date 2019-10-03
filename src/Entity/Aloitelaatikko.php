@@ -2,6 +2,7 @@
 namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AloitelaatikkoRepository")
  */
@@ -33,7 +34,7 @@ private $id;
      */
     private $kuvaus;
        /**
-     * @ORM\Column
+     * @ORM\Column(type="date")
      */
      private $kirjauspvm;
     

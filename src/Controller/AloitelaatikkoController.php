@@ -2,12 +2,13 @@
 namespace App\Controller;
 use App\Entity\Aloitelaatikko;
 use App\Controller\AloiteController;
-
+use DateTime;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -33,17 +34,18 @@ class AloitelaatikkoController extends AbstractController{
    public function aloitelaatikko(Request $request){
 
        $aloitelaatikko = new Aloitelaatikko();    
-       $aloitelaatikko->setKirjauspvm(date("d / m / Y"));
+    
        $form = $this->createFormBuilder($aloitelaatikko)
            ->setAction($this->generateUrl('uusi'))
            ->add('aihe', TextType::class, ['label' => 'Aloitteen aihe!'])
            ->add('kuvaus', TextType::class, ['label' => 'Kirjoita aloitteesi!'])
-           ->add('etunimi',null,['required' => false])
-           ->add('sukunimi', TextType::class)
+           ->add('etunimi', TextType::class, ['required' => false])
+           ->add('sukunimi', TextType::class, ['required' => false])
            ->add('email', TextType::class)
-           ->add('kirjauspvm', TextType::class, ['label' => 'Kirjauspäivämäärä'])
+           ->add('kirjauspvm', DateType::class, ['label' => 'Kirjauspäivämäärä'])
            ->add('Save', SubmitType::class, ['label' => 'Tallenna', 'attr' =>array('class' => 'btn btn-info mt-3')])
            ->getForm();
+           
 
            //lomakkeen käsittely
            $form->handleRequest($request);
@@ -58,6 +60,8 @@ class AloitelaatikkoController extends AbstractController{
               $entityManager->persist($aloitelaatikko);
       
               $entityManager->flush();
+
+              var_dump($aloitelaatikko->getKirjauspvm());
       
               return $this->render('lomakeLahetetty.html.twig', [
                   'pvm' => $aloitelaatikko->getKirjauspvm(),
