@@ -6,20 +6,9 @@
 
         {% block body %}
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="aloitelaatikko">Home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="aloitelaatikko/uusi">Uusi aloite <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">Pricing</a>
-    </div>
-  </div>
-</nav>
-        
+ 
         <h1>Aloitelaatikko</h1>
+
         <table class="table table-hover">
   <thead>
         <tr>
@@ -45,9 +34,9 @@
       <td>{{aloite.email }}</td>
 
       <td>
-      <a href="#" class="btn btn-dark">Nayta</a>
-      <a href="#" class="btn btn-success">Muokkaa</a>
-      <button class="btn btn-danger">Poista</button>
+      <a href="{{ path('nayta', {id: aloite.id}) }}" class="btn btn-dark">Nayta</a>
+      <a href="{{ path('muokkaa', {id: aloite.id}) }}" class="btn btn-success">Muokkaa</a>
+      <button poista-linkki="{{ aloite.id }}" class="btn btn-danger poista-linkki"> Poista</button>
 
 
      </td>
@@ -55,4 +44,6 @@
     {% endfor %}
   </tbody>
 </table>
+
+        
         {% endblock %}

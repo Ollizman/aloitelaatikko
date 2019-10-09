@@ -1,3 +1,6 @@
+
+{% block body %}
 <h1> Kiitos aloitteesta {{ etunimi }} ! </h1> 
 <h3> {{ pvm |date("d-m-Y")}} </h3>
-<button {onClick=(header(location:index.html.twig))}>Etusivulle</button>
+<button name='etusivulle-nappi'> <a href="{{ path('aloitteet') }}"> Etusivulle </a> </button>
+{% endblock %}

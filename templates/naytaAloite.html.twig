@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Aloitelomake id {aloite.id} {% endblock %}
+
+{% block body %}
+
+<table class="table table-hover">
+    <tr>
+      <th>{{ aloite.id }}</th>
+      <td>{{ aloite.aihe }}</td>
+        <td>{{aloite.etunimi }}</td>
+      <td>{{aloite.sukunimi }}</td>
+      <td>{{aloite.email }}</td>      
+      <td>{{ aloite.kirjauspvm |date("d / m / Y") }}</td>
+    
+    </tr>
+    <tr> 
+    <td>Aloitteen kuvaus:</td>
+
+      <tr>
+      <td>
+      {{aloite.kuvaus}}
+      </td>
+        </tr>
+</table
+<button name='etusivulle-nappi'> <a href="{{ path('aloitteet') }}"> Etusivulle </a> </button>
+
+{% endblock %}
