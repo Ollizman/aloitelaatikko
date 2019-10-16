@@ -31,7 +31,7 @@ class AloitelaatikkoController extends AbstractController{
    public function aloitelaatikko(Request $request){
 
        $aloitelaatikko = new Aloitelaatikko();    
-    
+        $aloitelaatikko->setKirjauspvm(new \DateTime('now'));
        $form = $this->createFormBuilder($aloitelaatikko)
           // ->setAction($this->generateUrl('uusi'))
            ->add('aihe', TextType::class, ['label' => 'Aloitteen aihe!'])
@@ -39,7 +39,7 @@ class AloitelaatikkoController extends AbstractController{
            ->add('etunimi', TextType::class, ['required' => false])
            ->add('sukunimi', TextType::class, ['required' => false])
            ->add('email', TextType::class)
-           ->add('kirjauspvm', DateType::class, ['label' => 'Kirjauspäivämäärä'])
+           ->add('kirjauspvm', DateType::class, ['label' => 'Kirjauspäivämäärä', 'format' => 'dd MM yyyy'])
            ->add('Save', SubmitType::class, ['label' => 'Tallenna', 'attr' =>array('class' => 'btn btn-info mt-3')])
            ->getForm();
            
